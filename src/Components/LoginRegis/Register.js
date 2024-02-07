@@ -17,8 +17,23 @@ function Register() {
   
     const handleRegis = async (e) => {
       e.preventDefault();
-  
-      if (!users.username || users.username.length < 5) {
+      if (!users.username || users.username.trim() === "") {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Please enter a username.",
+        });
+        return;
+      }
+      if (!users.password || users.password.trim() === "") {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Please enter a password.",
+        });
+        return;
+      }
+      if (users.username.length < 5) {
         Swal.fire({
           icon: "error",
           title: "Error",
@@ -26,8 +41,7 @@ function Register() {
         });
         return;
       }
-  
-      if (!users.password || users.password.length < 8) {
+      if (users.password.length < 8) {
         Swal.fire({
           icon: "error",
           title: "Error",
@@ -35,7 +49,6 @@ function Register() {
         });
         return;
       }
-  
       if (users.password !== users.confirmPassword) {
         Swal.fire({
           icon: "error",
@@ -44,13 +57,11 @@ function Register() {
         });
         return;
       }
-  
       try {
         const response = await axios.post(`${process.env.REACT_APP_API_URL}/register`, {
           username: users.username,
           password: users.password,
         });
-  
         if (response.data.status === "ok") {
           Swal.fire({
             icon: "success",
@@ -88,7 +99,7 @@ function Register() {
         });
       }
     };
-  
+
     return (
       <div className="d-flex justify-content-center align-items-center vh-100 bgPage">
         <div className="p-3 rounded w-25 border loginForm">

@@ -15,52 +15,68 @@ function ResetPassword() {
       const handlePasswordReset = async (e) => {
         e.preventDefault();
         try {
-          if (passwords.newPassword.length < 8 || passwords.newPassword.length > 30) {
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "Password should be at least 8 characters",
-            });
-            return;
-          }
-          if (passwords.newPassword !== passwords.confirmPassword) {
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "Passwords do not match!",
-            });
-            return;
-          }
-          const response = await axios.put(
-            `${process.env.REACT_APP_API_URL}/users/${id}/reset-password`,
-            {
-              newPassword: passwords.newPassword,
+            if (!passwords.newPassword) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Please enter a new password.",
+                });
+                return;
             }
-          );
-          console.log(response.data);
-          if (response.data.status === 'ok') {
-            Swal.fire({
-              icon: "success",
-              title: "Success",
-              text: "Password updated successfully",
-            });
-            navigate("/"); 
-          } else {
-            Swal.fire({
-              icon: "error",
-              title: "Error",
-              text: response.data.message,
-            });
-          }
+            if (passwords.newPassword.length < 8 || passwords.newPassword.length > 30) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Password should be between 8 and 30 characters.",
+                });
+                return;
+            }
+            if (!passwords.confirmPassword) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Please confirm your new password.",
+                });
+                return;
+            }
+            if (passwords.newPassword !== passwords.confirmPassword) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Passwords do not match!",
+                });
+                return;
+            }
+            const response = await axios.put(
+                `${process.env.REACT_APP_API_URL}/users/${id}/reset-password`,
+                {
+                    newPassword: passwords.newPassword,
+                }
+            );
+            console.log(response.data);
+            if (response.data.status === 'ok') {
+                Swal.fire({
+                    icon: "success",
+                    title: "Success",
+                    text: "Password updated successfully",
+                });
+                navigate("/"); 
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: response.data.message,
+                });
+            }
         } catch (error) {
-          console.error(error);
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "An error occurred while updating the password!",
-          });
+            console.error(error);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "An error occurred while updating the password!",
+            });
         }
-      };  
+    };
     
       return (
         <div className="d-flex justify-content-center align-items-center vh-100 bgPage">

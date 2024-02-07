@@ -7,42 +7,60 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 function Login() {
-    const handleSignin = async (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        const jsonData = {
-          username: data.get("username"),
-          password: data.get("password"),
-        };
-        try {
-          const response = await axios.post(
+  const handleSignin = async (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const username = data.get("username");
+    const password = data.get("password");
+    if (!username) {
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Please enter a username",
+        });
+        return; 
+    }
+    if (!password) {
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Please enter a password",
+        });
+        return; 
+    }
+    const jsonData = {
+        username: username,
+        password: password,
+    };
+    try {
+        const response = await axios.post(
             `${process.env.REACT_APP_API_URL}/login`,
             jsonData,
             {
-              headers: {
-                "Content-Type": "application/json",
-              },
+                headers: {
+                    "Content-Type": "application/json",
+                },
             }
-          );
-          if (response.data.status === "ok") {
+        );
+        if (response.data.status === "ok") {
             localStorage.setItem("token", response.data.token);
             window.location = "/dashboard";
-          } else {
+        } else {
             Swal.fire({
-              icon: "error",
-              title: "Login Failed",
-              text: "Invalid username or password",
+                icon: "error",
+                title: "Login Failed",
+                text: "Invalid username or password",
             });
-          }
-        } catch (error) {
-          console.error("Error", error);
-          Swal.fire({
+        }
+    } catch (error) {
+        console.error("Error", error);
+        Swal.fire({
             icon: "error",
             title: "Error",
             text: "An error occurred while processing your request",
-          });
-        }
-      };
+        });
+    }
+};
     
       return (
         <div className="d-flex justify-content-center align-items-center vh-100 bgPage">

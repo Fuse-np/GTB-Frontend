@@ -13,28 +13,37 @@ function ForgotPassword() {
     
       const handleCheckUser = async (e) => {
         e.preventDefault();
-        try {
-          const response = await axios.post(`${process.env.REACT_APP_API_URL}/check-username`, {
-            username: users.username,
-          });
-          if (response.data.usernameExists) {
-            window.location.href = `/resetpassword/${response.data.userId}`;
-          } else {
+        const username = users.username.trim(); 
+        if (!username) {
             Swal.fire({
-              icon: "error",
-              title: "Username does not exist!",
-              text: "Please check the username and try again.",
+                icon: "error",
+                title: "Error",
+                text: "Please enter a username.",
             });
-          }
-        } catch (error) {
-          console.error("Error checking username:", error);
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Something went wrong. Please try again later.",
-          });
+            return;
         }
-      };
+        try {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/check-username`, {
+                username: username,
+            });
+            if (response.data.usernameExists) {
+                window.location.href = `/resetpassword/${response.data.userId}`;
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Username does not exist!",
+                    text: "Please check the username and try again.",
+                });
+            }
+        } catch (error) {
+            console.error("Error checking username:", error);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong. Please try again later.",
+            });
+        }
+    };
     
       return (
         <div className="d-flex justify-content-center align-items-center vh-100 bgPage">
