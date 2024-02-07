@@ -59,7 +59,7 @@ function SwYearly() {
     const handleDelete = (id) => {
       Swal.fire({
         title: "Confirm",
-        text: "Data will be delete from None Softwere Asset?",
+        text: "Data will be delete from Softwere Yearly?",
         icon: "question",
         showCancelButton: true,
         confirmButtonColor: "#dc3545",
@@ -75,7 +75,7 @@ function SwYearly() {
               console.log(res);
               Swal.fire({
                 title: "Success",
-                text: "None softwere asset delete successfully!",
+                text: "Softwere Yearly delete successfully!",
                 icon: "success",
                 confirmButtonColor: "#28a745",
               }).then((result) => {

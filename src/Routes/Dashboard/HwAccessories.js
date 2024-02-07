@@ -74,7 +74,7 @@ function HwAccessories() {
             console.log(res);
             Swal.fire({
               title: "Success",
-              text: "None hardwere asset delete successfully!",
+              text: "Hardwere Accessories delete successfully!",
               icon: "success",
               confirmButtonColor: "#28a745",
             }).then((result) => {

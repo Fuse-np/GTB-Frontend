@@ -58,7 +58,7 @@ function ReadHwasset() {
     const handleDelete = (id) => {
       Swal.fire({
         title: "Are you sure?",
-        text: "Data will remove from database",
+        text: "Data will be delete from Hardware Asset",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",

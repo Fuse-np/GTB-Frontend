@@ -58,7 +58,7 @@ function ReadAmortized() {
     const handleDelete = (id) => {
       Swal.fire({
         title: "Are you sure?",
-        text: "Data will remove from database",
+        text: "Data will be delete from Amortized Asset",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -81,7 +81,7 @@ function ReadAmortized() {
     return (
       <div className="container px-5 mt-3">
         <div className="d-flex justify-content-center shadow p-3 mb-5 bg-white rounded">
-          <h3 className="display-4">Asset Detail</h3>
+          <h3 className="display-4">Amortized Asset Detail</h3>
         </div>
         <div className="mt-3">
           <table
